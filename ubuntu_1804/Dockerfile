@@ -76,7 +76,6 @@ FROM ubuntu:18.04 as openrtm-build
 
 ENV ARTIFACTS="artifacts"
 
-RUN sed -i -e 's%archive.ubuntu.com/ubuntu%ftp.riken.go.jp/Linux/ubuntu/%g' /etc/apt/sources.list
 RUN apt update\
  && apt install -y --no-install-recommends \
  python3 \
