@@ -104,9 +104,9 @@ RUN python3 setup.py build \
  && python3 setup.py sdist
 
 WORKDIR /root/OpenRTM-aist-Python/dist
-RUN tar xf OpenRTM-aist-Python-1.2.1.tar.gz
-
-WORKDIR OpenRTM-aist-Python-1.2.1/packages
-RUN make \ 
+RUN VERSION=`python3 ../setup.py --version` \
+ && tar xf OpenRTM-aist-Python-${VERSION}.tar.gz \
+ && cd OpenRTM-aist-Python-${VERSION}/packages \
+ && make \
  && cp openrtm-aist* /root/${ARTIFACTS}/
 
