@@ -1,9 +1,9 @@
 FROM ubuntu:18.04 as omniorb-build
 
-ENV OMNI_TOP="omniorb-src"
-ENV OMNI_SRC="omniORB-4.2.3"
-ENV OMNI_APT_SRC="omniorb-dfsg-4.2.2"
-ENV ARTIFACTS="artifacts"
+ARG OMNI_TOP="omniorb-src"
+ARG OMNI_VER
+ARG OMNI_APT_SRC="omniorb-dfsg-4.2.2"
+ARG ARTIFACTS="artifacts"
 
 RUN apt update\
  && apt install -y --no-install-recommends \
@@ -26,10 +26,10 @@ RUN sed -i -e 's/^# deb-src/deb-src/g' /etc/apt/sources.list \
 COPY ${OMNI_TOP} /root/${OMNI_TOP}
 WORKDIR /root/${OMNI_TOP}
 RUN apt source omniorb \
- && cp -r ${OMNI_APT_SRC}/debian ${OMNI_SRC}/ \
- && patch -d ${OMNI_SRC}/debian < ${OMNI_SRC}_debian.patch 
+ && cp -r ${OMNI_APT_SRC}/debian omniORB-${OMNI_VER}/ \
+ && patch -d omniORB-${OMNI_VER}/debian < omniORB-${OMNI_VER}_debian.patch
 
-WORKDIR /root/${OMNI_TOP}/${OMNI_SRC}
+WORKDIR /root/${OMNI_TOP}/omniORB-${OMNI_VER}
 RUN dpkg-buildpackage -b -us -uc 
 
 RUN mkdir -p /root/${ARTIFACTS} \
@@ -39,19 +39,18 @@ RUN mkdir -p /root/${ARTIFACTS} \
  && cp /root/${OMNI_TOP}/lib*.deb /root/${ARTIFACTS}/
 
 WORKDIR /root/${ARTIFACTS}
-RUN dpkg -i libomnithread4_4.2.3-0.1_amd64.deb \
- && dpkg -i libomniorb4-2_4.2.3-0.1_amd64.deb \
- && dpkg -i libomnithread4-dev_4.2.3-0.1_amd64.deb \
- && dpkg -i libomniorb4-dev_4.2.3-0.1_amd64.deb \
- && dpkg -i omniidl_4.2.3-0.1_amd64.deb \
- && dpkg -i omniorb-nameserver_4.2.3-0.1_amd64.deb \
- && dpkg -i omniorb-idl_4.2.3-0.1_all.deb
+RUN dpkg -i libomnithread4_${OMNI_VER}*.deb \
+ && dpkg -i libomniorb4-2_${OMNI_VER}*.deb \
+ && dpkg -i libomnithread4-dev_${OMNI_VER}*.deb \
+ && dpkg -i libomniorb4-dev_${OMNI_VER}*.deb \
+ && dpkg -i omniidl_${OMNI_VER}*.deb \
+ && dpkg -i omniorb-nameserver_${OMNI_VER}*.deb \
+ && dpkg -i omniorb-idl_${OMNI_VER}*.deb
 
 ##### build omniORBpy
 
-ENV OMNIPY_TOP="omniorbpy-src"
-ENV OMNIPY_SRC="omniORBpy-4.2.3"
-ENV OMNIPY_APT_SRC="python-omniorb-4.2.2"
+ARG OMNIPY_TOP="omniorbpy-src"
+ARG OMNIPY_APT_SRC="python-omniorb-4.2.2"
 
 RUN apt install -y --no-install-recommends \
  python-all-dev \
@@ -60,10 +59,10 @@ RUN apt install -y --no-install-recommends \
 COPY ${OMNIPY_TOP} /root/${OMNIPY_TOP}
 WORKDIR /root/${OMNIPY_TOP}
 RUN apt source python-omniorb \
- && cp -r ${OMNIPY_APT_SRC}/debian ${OMNIPY_SRC}/ \
- && patch -d ${OMNIPY_SRC}/debian < ${OMNIPY_SRC}_debian.patch 
+ && cp -r ${OMNIPY_APT_SRC}/debian omniORBpy-${OMNI_VER}/ \
+ && patch -d omniORBpy-${OMNI_VER}/debian < omniORBpy-${OMNI_VER}_debian.patch 
 
-WORKDIR /root/${OMNIPY_TOP}/${OMNIPY_SRC}
+WORKDIR /root/${OMNIPY_TOP}/omniORBpy-${OMNI_VER}
 RUN dpkg-buildpackage -b -us -uc
 
 RUN cp /root/${OMNIPY_TOP}/*deb /root/${ARTIFACTS}/ \
@@ -74,13 +73,15 @@ RUN cp /root/${OMNIPY_TOP}/*deb /root/${ARTIFACTS}/ \
 
 FROM ubuntu:18.04 as openrtm-build
 
-ENV ARTIFACTS="artifacts"
+ARG ARTIFACTS="artifacts"
+ARG OMNI_VER
 
 RUN apt update\
  && apt install -y --no-install-recommends \
  python3 \
  python3-all-dev \
  doxygen \
+ graphviz \
  pkg-config \
  libssl-dev \
  build-essential \
@@ -91,12 +92,12 @@ RUN apt update\
 COPY --from=omniorb-build /root/${ARTIFACTS} /root/${ARTIFACTS}
 
 WORKDIR /root/${ARTIFACTS}
-RUN dpkg -i libomnithread4_4.2.3-0.1_amd64.deb \
- && dpkg -i libomniorb4-2_4.2.3-0.1_amd64.deb \
- && dpkg -i omniidl_4.2.3-0.1_amd64.deb \
- && dpkg -i omniidl-python3_4.2.3-0.1_all.deb \
- && dpkg -i python3-omniorb_4.2.3-0.1_amd64.deb \
- && dpkg -i python3-omniorb-omg_4.2.3-0.1_all.deb
+RUN dpkg -i libomnithread4_${OMNI_VER}*.deb \
+ && dpkg -i libomniorb4-2_${OMNI_VER}*.deb \
+ && dpkg -i omniidl_${OMNI_VER}*.deb \
+ && dpkg -i omniidl-python3_${OMNI_VER}*.deb \
+ && dpkg -i python3-omniorb_${OMNI_VER}*.deb \
+ && dpkg -i python3-omniorb-omg_${OMNI_VER}*.deb
 
 COPY OpenRTM-aist-Python /root/OpenRTM-aist-Python
 WORKDIR /root/OpenRTM-aist-Python

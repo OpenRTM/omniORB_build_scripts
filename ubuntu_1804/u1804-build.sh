@@ -58,7 +58,7 @@ git checkout svn/RELENG_1_2
 cd -
 
 # Source build in docker environment.
-echo "${password}" | sudo -S docker build -t ${IMAGE_NAME} .
+echo "${password}" | sudo -S docker build --build-arg OMNI_VER=${OMNI_VER} -t ${IMAGE_NAME} .
 echo "${password}" | sudo -S docker create --name ${CONTAINER_NAME} ${IMAGE_NAME}
 echo "${password}" | sudo -S docker cp ${CONTAINER_NAME}:/root/artifacts .
 echo "${password}" | sudo -S docker rm ${CONTAINER_NAME}
