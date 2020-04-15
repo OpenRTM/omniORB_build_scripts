@@ -1,23 +1,23 @@
 #!/bin/bash
 #
-# Script to build omniORB 4.2.3, omniORBpy 4.2.3 and OpenRTM-aist-Python
+# Script to build omniORB 4.2.4, omniORBpy 4.2.4 and OpenRTM-aist-Python
 # in python3 environment of ubuntu 16.04.
 #
 # Patch the debian directory of omniORB omniORBpy 4.2.2.
-# Use this to create a deb package for omniORB and omniORBpy 4.2.3
+# Use this to create a deb package for omniORB and omniORBpy 4.2.4
 # in docker environment.
 # After that, create a deb package for Python3 of OpenRTM-aist-Python.
 #
 # Usage:
 #   $ sh u1604-build.sh
 #   $ ls artifacts
-#   libcos4-2_4.2.3-0.1_amd64.deb   libomnithread4-dev_4.2.3-0.1_amd64.deb
-#   omniidl_4.2.3-0.1_amd64.deb     omniorb_4.2.3-0.1_amd64.deb
+#   libcos4-2_4.2.4-0.1_amd64.deb   libomnithread4-dev_4.2.4-0.1_amd64.deb
+#   omniidl_4.2.4-0.1_amd64.deb     omniorb_4.2.4-0.1_amd64.deb
 #      :
-#   openrtm-aist-python3_1.2.1-1_amd64.deb
+#   openrtm-aist-python3_1.2.2-0_amd64.deb
 #
 TARGET=omniorb
-OMNI_VER=4.2.3
+OMNI_VER=4.2.4
 DIST_NAME=ubuntu1604
 
 OMNI_SHORT_VER=`echo ${OMNI_VER} | sed 's/\.//g'`
