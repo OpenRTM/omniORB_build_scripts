@@ -2,7 +2,7 @@ diff -uprN debian422/changelog debian423/changelog
 --- debian422/changelog	2020-02-03 14:02:10.300723345 +0900
 +++ debian423/changelog	2020-02-04 18:47:01.728671320 +0900
 @@ -1,3 +1,10 @@
-+omniorb (4.2.3-0.1) experimental; urgency=medium
++omniorb (4.2.4-0.1) experimental; urgency=medium
 +
 +  * Non-maintainer upload.
 +  * New upstream version.

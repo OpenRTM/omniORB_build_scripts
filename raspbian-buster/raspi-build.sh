@@ -1,23 +1,23 @@
 #!/bin/bash
 #
-# Script to build omniORB 4.2.3, omniORBpy 4.2.3 and OpenRTM-aist-Python
+# Script to build omniORB 4.2.4, omniORBpy 4.2.4 and OpenRTM-aist-Python
 # in python3 environment of Raspberry Pi.
 #
 # Patch the debian directory of omniORB omniORBpy 4.2.2.
-# Use this to create a deb package for omniORB and omniORBpy 4.2.3
+# Use this to create a deb package for omniORB and omniORBpy 4.2.4
 # in docker environment.
 # After that, create a deb package for Python3 of OpenRTM-aist-Python.
 #
 # Usage:
 #   $ sh raspi-build.sh 
 #   $ ls artifacts
-#   libcos4-2_4.2.3-0.1_armhf.deb   libomnithread4-dev_4.2.3-0.1_armhf.deb
-#   omniidl_4.2.3-0.1_armhf.deb     omniorb_4.2.3-0.1_armhf.deb
+#   libcos4-2_4.2.4-0.1_armhf.deb   libomnithread4-dev_4.2.4-0.1_armhf.deb
+#   omniidl_4.2.4-0.1_armhf.deb     omniorb_4.2.4-0.1_armhf.deb
 #      :
-#   openrtm-aist-python3_1.2.1-1_armhf.deb
+#   openrtm-aist-python3_1.2.2-0_armhf.deb
 #
 TARGET=omniorb
-OMNI_VER=4.2.3
+OMNI_VER=4.2.4
 DIST_NAME=raspi_buster
 OMNI_APT_SRC="omniorb-dfsg-4.2.2"
 OMNIPY_APT_SRC="python-omniorb-4.2.2"

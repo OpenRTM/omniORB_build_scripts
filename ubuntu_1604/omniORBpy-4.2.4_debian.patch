@@ -2,7 +2,7 @@ diff -uprN debian/changelog debian_1604/changelog
 --- debian/changelog	2020-02-12 14:14:44.493119029 +0900
 +++ debian_1604/changelog	2020-02-21 15:07:56.551650533 +0900
 @@ -1,3 +1,10 @@
-+python-omniorb (4.2.3-0.1) experimental; urgency=medium
++python-omniorb (4.2.4-0.1) experimental; urgency=medium
 +
 +  * Non-maintainer upload.
 +  * New upstream version.
@@ -22,9 +22,9 @@ diff -uprN debian/control debian_1604/control
 -  libomniorb4-dev (>= 4.2.2),
 -  omniorb-idl (>= 4.2.2),
 -  omniidl (>= 4.2.2),
-+  libomniorb4-dev (>= 4.2.3),
-+  omniorb-idl (>= 4.2.3),
-+  omniidl (>= 4.2.3),
++  libomniorb4-dev (>= 4.2.4),
++  omniorb-idl (>= 4.2.4),
++  omniidl (>= 4.2.4),
    autotools-dev
 -Build-Conflicts: omniidl-python
 +Build-Conflicts: omniidl-python3
