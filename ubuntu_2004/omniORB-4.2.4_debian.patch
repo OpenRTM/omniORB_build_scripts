@@ -1,0 +1,23 @@
+diff -uprN debian422/changelog debian424/changelog
+--- debian422/changelog	2020-05-22 15:27:22.498702709 +0900
++++ debian424/changelog	2020-05-22 15:33:11.126702709 +0900
+@@ -1,3 +1,10 @@
++omniorb (4.2.4-0.1) experimental; urgency=medium
++
++  * Non-maintainer upload.
++  * New upstream version. 
++
++ -- Noriaki Ando <n-ando@aist.go.jp>  Fri, 22 May 2020 14:21:30 +0100 
++
+ omniorb-dfsg (4.2.2-0.9build4) focal; urgency=medium
+ 
+   * No-change rebuild for libgcc-s1 package name change.
+diff -uprN debian422/control debian424/control
+--- debian422/control	2020-05-22 15:27:22.498702709 +0900
++++ debian424/control	2020-05-22 15:34:26.130702709 +0900
+@@ -1,4 +1,4 @@
+-Source: omniorb-dfsg
++Source: omniorb
+ Section: devel
+ Priority: optional
+ Maintainer: Debian CORBA Team <pkg-corba-devel@lists.alioth.debian.org>
