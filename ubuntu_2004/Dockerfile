@@ -8,7 +8,6 @@ ARG ARTIFACTS="artifacts"
 ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN sed -i -e 's!deb http://archive.ubuntu.com/ubuntu!deb http://ftp.riken.go.jp/Linux/ubuntu/!g' /etc/apt/sources.list
 RUN apt update\
  && apt install -y --no-install-recommends \
  python3 \
@@ -84,7 +83,6 @@ ARG OMNI_VER
 ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN sed -i -e 's%archive.ubuntu.com/ubuntu%ftp.riken.go.jp/Linux/ubuntu/%g' /etc/apt/sources.list
 RUN apt update\
  && apt install -y --no-install-recommends \
  python3 \
