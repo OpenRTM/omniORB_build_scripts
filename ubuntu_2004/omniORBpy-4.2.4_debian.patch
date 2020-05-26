@@ -1,6 +1,6 @@
 diff -uprN debian422/changelog debian424/changelog
---- debian422/changelog	2020-05-22 15:46:05.190702709 +0900
-+++ debian424/changelog	2020-05-22 15:49:26.842702709 +0900
+--- debian422/changelog	2020-05-26 09:48:41.920125458 +0900
++++ debian424/changelog	2020-05-26 09:49:50.764125458 +0900
 @@ -1,3 +1,10 @@
 +python-omniorb (4.2.4-0.1) experimental; urgency=medium
 +
@@ -13,8 +13,8 @@ diff -uprN debian422/changelog debian424/changelog
  
    * No-change rebuild for libgcc-s1 package name change.
 diff -uprN debian422/control debian424/control
---- debian422/control	2020-05-22 15:46:05.190702709 +0900
-+++ debian424/control	2020-05-22 15:58:09.034702709 +0900
+--- debian422/control	2020-05-26 09:48:41.920125458 +0900
++++ debian424/control	2020-05-26 09:49:59.276125458 +0900
 @@ -7,20 +7,20 @@ Build-Depends: debhelper (>= 9),
    dh-python,
    python-all-dev, python-all-dbg,
@@ -99,25 +99,30 @@ diff -uprN debian422/control debian424/control
   Architecture (CORBA) 2.6 compliant object request broker (ORB)
 diff -uprN debian422/omniidl-python3.install debian424/omniidl-python3.install
 --- debian422/omniidl-python3.install	1970-01-01 09:00:00.000000000 +0900
-+++ debian424/omniidl-python3.install	2020-05-22 16:13:11.294702709 +0900
++++ debian424/omniidl-python3.install	2020-05-26 09:50:24.884125458 +0900
 @@ -0,0 +1 @@
 +usr/lib/python*/*-packages/omniidl_be/python.py usr/lib/omniidl/omniidl_be/
+diff -uprN debian422/python3-omniorb-dbg.install debian424/python3-omniorb-dbg.install
+--- debian422/python3-omniorb-dbg.install	1970-01-01 09:00:00.000000000 +0900
++++ debian424/python3-omniorb-dbg.install	2020-05-26 09:52:56.548125458 +0900
+@@ -0,0 +1 @@
++usr/lib/python*/*-packages/_omni*d-x*.so*
 diff -uprN debian422/python3-omniorb-omg.install debian424/python3-omniorb-omg.install
 --- debian422/python3-omniorb-omg.install	1970-01-01 09:00:00.000000000 +0900
-+++ debian424/python3-omniorb-omg.install	2020-05-22 16:14:43.678702709 +0900
++++ debian424/python3-omniorb-omg.install	2020-05-26 09:50:24.884125458 +0900
 @@ -0,0 +1,2 @@
 +usr/lib/python*/*-packages/*.py
 +usr/lib/python*/*-packages/CosNaming*
 diff -uprN debian422/python3-omniorb.install debian424/python3-omniorb.install
 --- debian422/python3-omniorb.install	1970-01-01 09:00:00.000000000 +0900
-+++ debian424/python3-omniorb.install	2020-05-22 16:18:00.034702709 +0900
++++ debian424/python3-omniorb.install	2020-05-26 09:50:24.884125458 +0900
 @@ -0,0 +1,3 @@
 +usr/lib/python*/*-packages/omniORB.pth
 +usr/lib/python*/*-packages/_omni*-??-x*.so*
 +usr/lib/python*/*-packages/omniORB/
 diff -uprN debian422/rules debian424/rules
---- debian422/rules	2020-05-22 15:46:05.190702709 +0900
-+++ debian424/rules	2020-05-22 16:23:15.502702709 +0900
+--- debian422/rules	2020-05-26 09:48:41.920125458 +0900
++++ debian424/rules	2020-05-26 09:51:39.268125458 +0900
 @@ -23,7 +23,7 @@ ifeq (,$(findstring noopt,$(DEB_BUILD_OP
    CXX += -O2
  endif
@@ -132,7 +137,7 @@ diff -uprN debian422/rules debian424/rules
  	find . -name "*.pyc" -exec rm {} \;
  	find debian/tmp* -name '_omni*.so*'
 -	for i in $$(find debian/tmp-dbg -name '_omni*._d.so*'); do \
-+	for i in $$(find debian/tmp-dbg -name '_omni*dm-*.so*'); do \
++	for i in $$(find debian/tmp-dbg -name '_omni*d-*.so*'); do \
  	  echo "Renaming $$i ..."; \
 -	  dst=$$(echo $$i | sed 's,tmp-dbg,tmp,;s/\._d\.so/_d.so/'); \
 +	  dst=$$(echo $$i | sed 's,tmp-dbg,tmp,;'); \
