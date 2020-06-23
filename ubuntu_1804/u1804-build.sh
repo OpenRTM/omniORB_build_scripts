@@ -55,6 +55,12 @@ cd -
 git clone https://github.com/OpenRTM/OpenRTM-aist-Python
 cd OpenRTM-aist-Python
 git checkout svn/RELENG_1_2
+# Do not generate documentation package to avoid doxygen error.
+sed -i -e "s/('build_doc'/#('build_doc'/g" setup.py
+sed -i -e 's%(mkdir $(CURDIR)/debian/openrtm-aist-python3-doc%#(mkdir $(CURDIR)/debian/openrtm-aist-python3-doc%g' packages/deb/debian/rules
+sed -i -e 's/python3 setup.py install_doc/#python3 setup.py install_doc/g' packages/deb/debian/rules
+mv packages/deb/debian/control packages/deb/debian/control.back
+cat packages/deb/debian/control.back | head -n 27 > packages/deb/debian/control
 cd -
 
 # Source build in docker environment.
