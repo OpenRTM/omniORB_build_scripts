@@ -34,7 +34,7 @@ RUN apt source omniorb \
  && patch -d omniORB-${OMNI_VER}/debian < omniORB-${OMNI_VER}_debian.patch
 
 WORKDIR /root/${OMNI_TOP}/omniORB-${OMNI_VER}
-RUN dpkg-buildpackage -b -us -uc 
+RUN dpkg-buildpackage -b -us -uc -j4
 
 RUN mkdir -p /root/${ARTIFACTS} \
  && cp /root/${OMNI_TOP}/omni*deb /root/${ARTIFACTS}/ \
@@ -67,7 +67,7 @@ RUN apt source python-omniorb \
  && patch -d omniORBpy-${OMNI_VER}/debian < omniORBpy-${OMNI_VER}_debian.patch 
 
 WORKDIR /root/${OMNIPY_TOP}/omniORBpy-${OMNI_VER}
-RUN dpkg-buildpackage -b -us -uc
+RUN dpkg-buildpackage -b -us -uc -j4
 
 RUN cp /root/${OMNIPY_TOP}/*deb /root/${ARTIFACTS}/ \
  && cp /root/${OMNIPY_TOP}/*buildinfo /root/${ARTIFACTS}/ \
