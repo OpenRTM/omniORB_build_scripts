@@ -81,7 +81,7 @@ diff -uprN debian/control debian_1604/control
  Description: CORBA OMG standard files for python-omniorb
   omniORB4 is a freely available Common Object Request Broker
   Architecture (CORBA) 2.6 compliant object request broker (ORB)
-@@ -78,10 +78,10 @@ Description: CORBA OMG standard files fo
+@@ -78,10 +78,12 @@ Description: CORBA OMG standard files fo
   python-pyorbit-omg since only one package can provide the default
   CORBA bindings.
  
@@ -91,6 +91,8 @@ diff -uprN debian/control debian_1604/control
 -Depends: omniidl, ${python:Depends}, ${misc:Depends}
 -Recommends: python-omniorb
 +Depends: omniidl, ${python3:Depends}, ${misc:Depends}
++Conflicts: omniidl-python
++Replaces: omniidl-python
 +Recommends: python3-omniorb
  Description: omniidl backend to compile Python stubs from IDL files
   omniORB4 is a freely available Common Object Request Broker
