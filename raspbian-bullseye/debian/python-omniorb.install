@@ -1,0 +1,3 @@
+usr/lib/python*/*-packages/omniORB.pth
+usr/lib/python*/*-packages/_omni*module.so*
+usr/lib/python*/*-packages/omniORB/
