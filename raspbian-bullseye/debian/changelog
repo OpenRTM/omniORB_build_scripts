@@ -1,0 +1,440 @@
+python-omniorb (4.2.2-0.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Upload to unstable.
+
+ -- Emilio Pozuelo Monfort <pochu@debian.org>  Mon, 04 Jun 2018 19:36:04 +0200
+
+python-omniorb (4.2.2-0.1) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream version.
+  * Bump standards and debhelper versions.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 07 Feb 2018 19:52:41 +0100
+
+python-omniorb (3.6-1) unstable; urgency=low
+
+  [ Floris Bruynooghe ]
+  * New upstream release
+  * debian/patches/pythonpath: modified, mostly obsolte by new release.
+  * debian/patches/dist-packages__init__: removed, applied upstream.
+  * debian/control:
+     - add ${python:Depends} to python-omniorb-omg's Depends' line,
+       thanks Jakub Wilk (Closes: #642465).
+     - add ${shlibs:Depends} to python-omniorb-dbg
+  * debian/rules: add build-arch and build-indep targets.
+
+  [ Thomas Girard ]
+  * debian/control: Add DM-Upload-Allowed: yes.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Mon, 28 Nov 2011 22:53:15 +0100
+
+python-omniorb (3.5-3) unstable; urgency=low
+
+  [ Floris Bruynooghe ]
+  * debian/patches/dist-packages__init__: patch to stop shipping __init__.py
+    into dist-packages (Closes: #629352).
+
+  [ Thomas Girard ]
+  * debian/control: update with new Alioth URLs.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Tue, 14 Jun 2011 21:26:07 +0200
+
+python-omniorb (3.5-2) unstable; urgency=low
+
+  * debian/omniidl-python.install: fix bug exposed by python2.5
+    removal (thanks Jakub Wilk for patch) (closes: #624740)
+  * debian/control: bump standards version to 3.9.2, no changes needed.
+
+ -- Floris Bruynooghe <flub@devork.be>  Sun, 01 May 2011 12:42:50 +0000
+
+python-omniorb (3.5-1) unstable; urgency=low
+
+  [ Floris Bruynooghe ]
+  * New upstream release
+  * debian/python-omniorb-doc.docs, debian/python-omniorb-doc.doc-base:
+    remove .ps documentation, dropped by upstream.
+  * Change to dpkg-source format 3.0 (quilt).
+  * Add XB-Python-Version to python-omniorb-dbg.
+  * Bump Standars-Version to 3.9.1: no changes needed.
+  * debian/control: make python-omniorb-dbg recommend python-dbg.
+  * Bump debhelper compat level to 7 due to auto debian/tmp prefix usage.
+  * Convert to use dh_python2 (closes: #617015):
+    - install omniidl python backed to /usr/lib/omniidl/omniidl_be.
+  * Use dh_prep instead of dh_clean -k.
+  * Remove conflicts and provides of old packages now that those packages are
+    no longer in stable.
+  * Change Recommends of omniidl-python to python-omniorb instead of
+    libomniorb4-dev.
+  * Remove usused python:Provides as per python policy.
+  * Correct examples of modifying PYTHONPATH (closes: #605188)
+
+  [ Thomas Girard ]
+  * Remove obsolete Build-Conflicts: in debian/control.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Fri, 08 Apr 2011 18:09:45 +0200
+
+python-omniorb (3.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Bump Standards-Version to 3.8.3, no changes needed.
+  * Drop transitional packages, they've made it into a stable release.
+  * Let python-omniorb-omg conflict with python-pyorbit-omg (Closes: #550629).
+  * Add ${misc:Depends} to all packages.
+  * Add -dbg package for the extension modules.
+
+ -- Floris Bruynooghe <floris.bruynooghe@gmail.com>  Sun, 10 Jan 2010 00:53:35 +0000
+
+python-omniorb (3.2-2) unstable; urgency=low
+
+  * Rename omniidl4-python to omniidl-python in line with the omniorb4
+    binary packages, provide transitional package.
+  * Depend on python-central >= 0.6.0 and remove #452227 workaround.
+  * Depend on omniorb-idl and omniidl >= 4.1.2-2.
+  * Add python-omniorb-doc to include HTML, PDF and PS documentation,
+    move examples into this package.
+  * Bump debhelper compat level to 6, no changes.
+
+ -- Floris Bruynooghe <floris.bruynooghe@gmail.com>  Mon, 12 May 2008 21:06:44 +0100
+
+python-omniorb (3.2-1) unstable; urgency=low
+
+  [ Floris Bruynooghe ]
+  * Add debian/watch file.
+  * New upstream release.
+
+  [ Thomas Girard ]
+  * Ignore failure of pycentral workaround for #452227 now that it is fixed.
+    Thanks to Matthias Klose for reporting this. Closes: #472020.
+
+ -- Floris Bruynooghe <floris.bruynooghe@gmail.com>  Wed, 26 Mar 2008 22:17:38 +0000
+
+python-omniorb (3.1-1) unstable; urgency=low
+
+  [ Floris Bruynooghe ]
+  * New upstream release (Closes: #453164, #430424, #398463).
+  * Update copyright file (Closes: #264390). Thanks to Roland Stigge for the
+    report and the patch.
+  * Remove Provides fields, no one depends on them anyway (Closes: #399940).
+  * Acknowledge NMUs and conform to new Python policy (Closes: #377482).
+  * Bump debhelper compat to 5.
+  * Bump Standards-Version to 2.7.3, no changes needed.
+  * Add Vcs-* control fields in debian/control.
+  * Update descriptions in debian/control.
+  * Change deprecated ${Source-Version} to ${binary:Version} in
+    debian/control.
+  * Add examples in the package.
+
+  [ Thomas Girard ]
+  * Build-Depends: on libomniorb4-dev >= 4.1.1-2.
+  * Build using -g, and honor noopt DEB_BUILD_OPTIONS.
+  * Remove obsolete Conflicts: for python2.3 packages.
+  * Drop __GNUC__ and __GNUG__ from upstream Makefile. (Closes: #455444)
+  * Build-Conflicts: with omniidl4-python.
+  * Rename python-omniorb2 to python-omniorb, and python-omniorb2-omg to
+    python-omniorb-omg. Change the source package name as well, and handle
+    the transition.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 22 Dec 2007 16:49:38 +0100
+
+python-omniorb2 (2.6-3.3) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * High urgency for fixing RC bug.
+  * Provide again CORBA module (Closes: #410652)
+     + patch from Floris Bruynooghe.
+
+ -- Mohammed Adnène Trojette <adn+deb@diwi.org>  Tue, 13 Mar 2007 13:46:01 +0100
+
+python-omniorb2 (2.6-3.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fixed FTBFS, changed file omniidl4-python.files to be independent of the 
+    python version (Closes: #400490).
+
+ -- Ana Beatriz Guerrero Lopez <ana@debian.org>  Sun,  3 Dec 2006 08:25:17 +0100
+
+python-omniorb2 (2.6-3.1) unstable; urgency=low
+
+  * NMU
+  * Convert to the updated python policy.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  7 Jul 2006 16:34:10 +0000
+
+python-omniorb2 (2.6-3) unstable; urgency=low
+
+  * debian:
+    - Remove python2.1 and python2.2 packages. (closes: #351147)
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 09 Apr 2006 20:15:16 +0200
+
+python-omniorb2 (2.6-2) unstable; urgency=low
+
+  * C++ ABI transition.
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 31 Jul 2005 11:18:45 +0200
+
+python-omniorb2 (2.6-1) unstable; urgency=high
+
+  * New upstream version.
+  * Add python2.4-omniorb2.
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 16 Apr 2005 11:43:36 +0200
+
+python-omniorb2 (2.5-1) unstable; urgency=low
+
+  * New upstream release. (closes: #277132)
+  * Add new packages: python2.[23]-omniorb2-omg. (closes: #220918)
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 27 Nov 2004 15:35:45 +0100
+
+python-omniorb2 (2.4.1-1) unstable; urgency=high
+
+  * Remove undistributable file. (closes: #264357, #264389)
+  * debian/copyright:
+    - Update. (closes: #264390)
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 08 Aug 2004 21:52:47 +0200
+
+python-omniorb2 (2.4-2) unstable; urgency=low
+
+  * debian/control:
+    - Build-Depend against libomniorb4-dev (>= 4.0.4).
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 05 Aug 2004 12:54:13 +0200
+
+python-omniorb2 (2.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Blank <waldi@debian.org>  Wed, 04 Aug 2004 16:36:01 +0200
+
+python-omniorb2 (2.3-1) unstable; urgency=low
+
+  * New upstream release. (closes: #226093)
+  * debian/*.{postinst,prerm}:
+    - Remove.
+  * debian/*.preinst:
+    - Remove cruft.
+  * debian/control:
+    - Build-Depend against debhelper (>= 4.1.67).
+    - Fix Depends and Conflicts. (closes: #213096) 
+  * debian/rules:
+    - Use di_python.
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 17 Jan 2004 11:52:45 +0100
+
+python-omniorb2 (2.2-2) unstable; urgency=low
+
+  * debian/python2.{2,3}-omniorb2.{postinst,prerm}
+    - add alternative for CORBA.py and PortableServer.py
+  * debian/control
+    - python2.2-omniorb2 conflict against python2.2-pyorbit (<= 2.0.0-1)
+    - python2.3-omniorb2 conflict against python2.3-pyorbit (<= 2.0.0-1)
+    - add python-omniorb2 (closes: #213096)
+
+ -- Bastian Blank <waldi@debian.org>  Tue, 18 Nov 2003 20:54:58 +0100
+
+python-omniorb2 (2.2-1) unstable; urgency=low
+
+  * new upstream version
+  * new package for python 2.3
+
+ -- Bastian Blank <waldi@debian.org>  Tue, 12 Aug 2003 16:07:08 +0200
+
+python-omniorb2 (2.1-2) unstable; urgency=low
+
+  * debian/control
+    - build-depend on omniorb4 (>= 4.0.1)
+  * debian/rules
+    - fix rm of *.pyc (closes: #189407)
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 17 Apr 2003 15:53:45 +0200
+
+python-omniorb2 (2.1-1) unstable; urgency=low
+
+  * new upstream version
+  * debian/control
+    - fix conflicts/replaces of python2.2-omniorb2 (closes: #188942)
+
+ -- Bastian Blank <waldi@debian.org>  Wed, 16 Apr 2003 18:00:03 +0200
+
+python-omniorb2 (2.0-4) unstable; urgency=low
+
+  * really fix clean target (closes: #187759)
+  * change section to python
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 06 Apr 2003 00:44:24 +0200
+
+python-omniorb2 (2.0-3) unstable; urgency=low
+
+  * build-depend against omniidl4 (closes: #187079)
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 05 Apr 2003 11:54:02 +0200
+
+python-omniorb2 (2.0-2) unstable; urgency=low
+
+  * build packages for python 2.1 and 2.2
+
+ -- Bastian Blank <waldi@debian.org>  Mon, 10 Feb 2003 17:37:32 +0100
+
+python-omniorb2 (2.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 16 Nov 2002 23:48:00 +0100
+
+python-omniorb2 (3.1-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+
+ -- Floris Bruynooghe <floris.bruynooghe@gmail.com>  Fri, 07 Dec 2007 00:03:23 +0000
+
+python-omniorb2 (2.6-3.3) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * High urgency for fixing RC bug.
+  * Provide again CORBA module (Closes: #410652)
+     + patch from Floris Bruynooghe.
+
+ -- Mohammed Adnène Trojette <adn+deb@diwi.org>  Tue, 13 Mar 2007 13:46:01 +0100
+
+python-omniorb2 (2.6-3.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fixed FTBFS, changed file omniidl4-python.files to be independent of the 
+    python version (Closes: #400490).
+
+ -- Ana Beatriz Guerrero Lopez <ana@debian.org>  Sun,  3 Dec 2006 08:25:17 +0100
+
+python-omniorb2 (2.6-3.1) unstable; urgency=low
+
+  * NMU
+  * Convert to the updated python policy.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  7 Jul 2006 16:34:10 +0000
+
+python-omniorb2 (2.6-3) unstable; urgency=low
+
+  * debian:
+    - Remove python2.1 and python2.2 packages. (closes: #351147)
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 09 Apr 2006 20:15:16 +0200
+
+python-omniorb2 (2.6-2) unstable; urgency=low
+
+  * C++ ABI transition.
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 31 Jul 2005 11:18:45 +0200
+
+python-omniorb2 (2.6-1) unstable; urgency=high
+
+  * New upstream version.
+  * Add python2.4-omniorb2.
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 16 Apr 2005 11:43:36 +0200
+
+python-omniorb2 (2.5-1) unstable; urgency=low
+
+  * New upstream release. (closes: #277132)
+  * Add new packages: python2.[23]-omniorb2-omg. (closes: #220918)
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 27 Nov 2004 15:35:45 +0100
+
+python-omniorb2 (2.4.1-1) unstable; urgency=high
+
+  * Remove undistributable file. (closes: #264357, #264389)
+  * debian/copyright:
+    - Update. (closes: #264390)
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 08 Aug 2004 21:52:47 +0200
+
+python-omniorb2 (2.4-2) unstable; urgency=low
+
+  * debian/control:
+    - Build-Depend against libomniorb4-dev (>= 4.0.4).
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 05 Aug 2004 12:54:13 +0200
+
+python-omniorb2 (2.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Blank <waldi@debian.org>  Wed, 04 Aug 2004 16:36:01 +0200
+
+python-omniorb2 (2.3-1) unstable; urgency=low
+
+  * New upstream release. (closes: #226093)
+  * debian/*.{postinst,prerm}:
+    - Remove.
+  * debian/*.preinst:
+    - Remove cruft.
+  * debian/control:
+    - Build-Depend against debhelper (>= 4.1.67).
+    - Fix Depends and Conflicts. (closes: #213096) 
+  * debian/rules:
+    - Use di_python.
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 17 Jan 2004 11:52:45 +0100
+
+python-omniorb2 (2.2-2) unstable; urgency=low
+
+  * debian/python2.{2,3}-omniorb2.{postinst,prerm}
+    - add alternative for CORBA.py and PortableServer.py
+  * debian/control
+    - python2.2-omniorb2 conflict against python2.2-pyorbit (<= 2.0.0-1)
+    - python2.3-omniorb2 conflict against python2.3-pyorbit (<= 2.0.0-1)
+    - add python-omniorb2 (closes: #213096)
+
+ -- Bastian Blank <waldi@debian.org>  Tue, 18 Nov 2003 20:54:58 +0100
+
+python-omniorb2 (2.2-1) unstable; urgency=low
+
+  * new upstream version
+  * new package for python 2.3
+
+ -- Bastian Blank <waldi@debian.org>  Tue, 12 Aug 2003 16:07:08 +0200
+
+python-omniorb2 (2.1-2) unstable; urgency=low
+
+  * debian/control
+    - build-depend on omniorb4 (>= 4.0.1)
+  * debian/rules
+    - fix rm of *.pyc (closes: #189407)
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 17 Apr 2003 15:53:45 +0200
+
+python-omniorb2 (2.1-1) unstable; urgency=low
+
+  * new upstream version
+  * debian/control
+    - fix conflicts/replaces of python2.2-omniorb2 (closes: #188942)
+
+ -- Bastian Blank <waldi@debian.org>  Wed, 16 Apr 2003 18:00:03 +0200
+
+python-omniorb2 (2.0-4) unstable; urgency=low
+
+  * really fix clean target (closes: #187759)
+  * change section to python
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 06 Apr 2003 00:44:24 +0200
+
+python-omniorb2 (2.0-3) unstable; urgency=low
+
+  * build-depend against omniidl4 (closes: #187079)
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 05 Apr 2003 11:54:02 +0200
+
+python-omniorb2 (2.0-2) unstable; urgency=low
+
+  * build packages for python 2.1 and 2.2
+
+ -- Bastian Blank <waldi@debian.org>  Mon, 10 Feb 2003 17:37:32 +0100
+
+python-omniorb2 (2.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 16 Nov 2002 23:48:00 +0100
+

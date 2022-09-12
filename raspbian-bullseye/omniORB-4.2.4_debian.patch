@@ -1,0 +1,23 @@
+diff -uprN debian422/changelog debian424/changelog
+--- debian422/changelog	2022-08-03 09:20:37.529177656 +0100
++++ debian424/changelog	2022-08-03 09:20:37.565177942 +0100
+@@ -1,3 +1,10 @@
++omniorb (4.2.4-0.1) experimental; urgency=medium
++
++  * Non-maintainer upload.
++  * New upstream version.
++
++ -- Noriaki Ando <n-ando@aist.go.jp>  Wed, 03 Aug 2022 08:15:37 +0100
++
+ omniorb-dfsg (4.2.2-1) unstable; urgency=medium
+ 
+   * Set maintainer to QA group (see #955300).
+diff -uprN debian422/control debian424/control
+--- debian422/control	2022-08-03 09:20:37.533177688 +0100
++++ debian424/control	2022-08-04 01:25:39.363495873 +0100
+@@ -1,4 +1,4 @@
+-Source: omniorb-dfsg
++Source: omniorb
+ Section: devel
+ Priority: optional
+ Maintainer: Debian QA Group <packages@qa.debian.org>
