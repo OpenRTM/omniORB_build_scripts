@@ -1,0 +1,95 @@
+Source: python-omniorb
+Section: python
+Priority: optional
+Maintainer: Debian CORBA Team <pkg-corba-devel@lists.alioth.debian.org>
+Uploaders: Floris Bruynooghe <flub@devork.be>, Thomas Girard <thomas.g.girard@free.fr>
+Build-Depends: debhelper (>= 9),
+  dh-python,
+  python-all-dev, python-all-dbg,
+  python3-all-dev, python3-all-dbg,
+  libomniorb4-dev (>= 4.2.5),
+  omniorb-idl (>= 4.2.5),
+  omniidl (>= 4.2.5),
+  autotools-dev
+Build-Conflicts: omniidl-python3
+Standards-Version: 4.1.3
+Vcs-Svn: svn://anonscm.debian.org/pkg-corba/trunk/python-omniorb
+Vcs-Browser: http://anonscm.debian.org/viewvc/pkg-corba/trunk/python-omniorb
+Homepage: http://omniorb.sourceforge.net
+
+Package: python3-omniorb
+Architecture: any
+Depends: ${python3:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Recommends: python3-omniorb-omg
+Description: Python bindings for omniORB
+ omniORB4 is a freely available Common Object Request Broker
+ Architecture (CORBA) 2.6 compliant object request broker (ORB)
+ implementation. It is based on the IIOP communications
+ protocol and should be interoperable with any other
+ CORBA 2.6 compliant ORB.
+ .
+ This is the Debian package of omniORBpy, the Python bindings to the
+ omniORB libraries.
+
+Package: python3-omniorb-dbg
+Priority: optional
+Architecture: any
+Depends: python3-omniorb (= ${binary:Version}), ${python3:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Recommends: python3-dbg
+Section: debug
+Description: Python bindings for omniORB
+ omniORB4 is a freely available Common Object Request Broker
+ Architecture (CORBA) 2.6 compliant object request broker (ORB)
+ implementation. It is based on the IIOP communications
+ protocol and should be interoperable with any other
+ CORBA 2.6 compliant ORB.
+ .
+ This package contains the debug symbols of python-omniorb as well as
+ modules for use with python-dbg.
+
+Package: python3-omniorb-doc
+Architecture: all
+Depends: ${misc:Depends}
+Section: doc
+Description: omniORBpy documentation
+ omniORB4 is a freely available Common Object Request Broker
+ Architecture (CORBA) 2.6 compliant object request broker (ORB)
+ implementation. It is based on the IIOP communications
+ protocol and should be interoperable with any other
+ CORBA 2.6 compliant ORB.
+ .
+ This package contains the documentation of omniORBpy, the Python
+ bindings to omniORB.  The bindings themselves can be found in the
+ python-omniorb package.
+ 
+Package: python3-omniorb-omg
+Architecture: all
+Depends: python3-omniorb (>= ${binary:Version}), ${python3:Depends}, ${misc:Depends}
+#Conflicts: python-pyorbit-omg
+Description: CORBA OMG standard files for python-omniorb
+ omniORB4 is a freely available Common Object Request Broker
+ Architecture (CORBA) 2.6 compliant object request broker (ORB)
+ implementation. It is based on the IIOP communications
+ protocol and should be interoperable with any other
+ CORBA 2.6 compliant ORB.
+ .
+ This package includes the Python files that are necessary to
+ fulfil the OMG standard 02-09-07.  It conflicts with
+ python-pyorbit-omg since only one package can provide the default
+ CORBA bindings.
+
+Package: omniidl-python3
+Architecture: all
+Depends: omniidl, ${python3:Depends}, ${misc:Depends}
+Conflicts: omniidl-python
+Replaces: omniidl-python
+Recommends: python3-omniorb
+Description: omniidl backend to compile Python stubs from IDL files
+ omniORB4 is a freely available Common Object Request Broker
+ Architecture (CORBA) 2.6 compliant object request broker (ORB)
+ implementation. It is based on the IIOP communications
+ protocol and should be interoperable with any other
+ CORBA 2.6 compliant ORB.
+ .
+ This includes the Python backend for omniidl to compile IDL to
+ Python stubs.
