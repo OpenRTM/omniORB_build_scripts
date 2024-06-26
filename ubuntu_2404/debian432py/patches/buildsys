@@ -1,0 +1,46 @@
+Description: Avoid forked code in the build system
+ This replaces omkdirhier and omkdepend which are source-level copies
+ of other projects.  They are only used during the build system and
+ can be easily replicated using standard OS and compiler programs in
+ Debian.
+ .
+ Upstream discussion:
+ http://www.omniorb-support.com/pipermail/omniorb-list/2002-October/022062.html
+Forwarded: not-needed
+Author: Bastian Blank <waldi@debian.org>
+Last-Update: 2010-08-09
+
+Index: b/mk/beforeauto.mk.in
+===================================================================
+--- a/mk/beforeauto.mk.in
++++ b/mk/beforeauto.mk.in
+@@ -692,17 +692,16 @@ AR              = ar cq
+ CC              = @CC@
+ CXX             = @CXX@
+ RANLIB		= @RANLIB@
+-MKDIRHIER	= @MKDIRHIER@
++MKDIRHIER	= mkdir -p
+ INSTLIBFLAGS	= -m 0644
+ INSTEXEFLAGS	= -m 0755
+ CP		= cp
+ MV		= mv -f
+ CPP		= @CPP@
+-OMKDEPEND	= @OMKDEPEND@
+ RMDIRHIER	= $(RM) -rf
+ 
+-CXXMAKEDEPEND   = $(OMKDEPEND) -D__cplusplus
+-CMAKEDEPEND     = $(OMKDEPEND)
++CXXMAKEDEPEND   = @CXX@ -M -MD -MG
++CMAKEDEPEND     = @CC@ -M -MD -MG
+ 
+ 
+ #
+@@ -763,8 +762,6 @@ CXXLINKOPTIONS  = @LDFLAGS@ $(CXXDEBUGFL
+ #
+ 
+ ifdef Compiler_GCC
+-CMAKEDEPEND     += -D__GNUC__
+-CXXMAKEDEPEND   += -D__GNUG__ -D__GNUC__
+ CXXOPTIONS       = -Wall -Wno-unused -fexceptions @EXTRA_GCC_CXXFLAGS@
+ EgcsMajorVersion = 1
+ EgcsMinorVersion = 1
