@@ -1,0 +1,17 @@
+Document: omniorbpy-user-guide
+Title: The omniORBpy version 3 User's Guide
+Author: Duncan Grisby
+Abstract: omniORBpy is an Object Request Broker (ORB) that implements
+ the CORBA 2.6 Python mapping.  It works in conjunction with omniORB
+ for C++, version 4.1.
+ .
+ This manual contains all you need to know about omniORB in order to
+ use omniORBpy.  Some sections are repeated from the omniORB manual.
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/python-omniorb-doc/omniORBpy/index.html
+Files: /usr/share/doc/python-omniorb-doc/omniORBpy/*
+
+Format: PDF
+Files: /usr/share/doc/python-omniorb-doc/omniORBpy.pdf

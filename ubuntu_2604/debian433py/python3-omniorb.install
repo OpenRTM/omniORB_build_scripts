@@ -1,0 +1,3 @@
+usr/local/lib/python*/*-packages/_omni*.so* usr/lib/python3/dist-packages/
+usr/local/lib/python*/*-packages/omniORB/ usr/lib/python3/dist-packages/
+

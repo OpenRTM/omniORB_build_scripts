@@ -1,0 +1,134 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
+  confflags += --build $(DEB_HOST_GNU_TYPE)
+else
+  confflags += --build $(DEB_BUILD_GNU_TYPE) --host $(DEB_HOST_GNU_TYPE)
+endif
+
+# CFLAGS is not honoured by the omniORB build system.
+CC  ?= gcc
+CXX ?= g++
+
+ifeq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+  CC  += -O2
+  CXX += -O2
+endif
+
+PYVERS := $(shell py3versions -vr debian/control)
+
+CONFIGURE = \
+	CC="$(CC)" CXX="$(CXX)" ../configure $(confflags) \
+		--prefix=/usr \
+		--mandir=\$${prefix}/share/man \
+		--infodir=\$${prefix}/share/info \
+		--with-omniorb=/usr \
+		--with-openssl=/usr
+
+autotools-update-stamp:
+	cp -f /usr/share/misc/config.guess /usr/share/misc/config.sub bin/scripts
+	touch $@
+
+build-%/config.status: autotools-update-stamp
+	dh_testdir
+	-mkdir build-$*
+	cd build-$* && $(CONFIGURE) PYTHON=/usr/bin/python$*
+
+dbg-build-%/config.status: autotools-update-stamp
+	dh_testdir
+	-mkdir build-dbg-$*
+	cd build-dbg-$* && $(CONFIGURE) PYTHON=/usr/bin/python$*-dbg
+
+build: build-arch build-indep
+build-arch:	build-stamp
+build-indep: build-stamp
+build-stamp: $(PYVERS:%=build-stamp-%) $(PYVERS:%=build-dbg-stamp-%)
+	touch $@
+
+build-stamp-%: build-%/config.status
+	dh_testdir
+	$(MAKE) -C build-$*
+	touch $@
+
+build-dbg-stamp-%: dbg-build-%/config.status
+	dh_testdir
+	$(MAKE) -C build-dbg-$*
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+	-rm -rf build*
+	-rm -f *-stamp
+	find . -name "*.pyc" -delete
+	-rm bin/scripts/config.guess bin/scripts/config.sub
+	rm -rf debian/tmp-dbg
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	set -e; \
+	for v in $(PYVERS); do \
+	  echo "================ $$v ==================="; \
+	  $(MAKE) -C build-dbg-$$v install DESTDIR=$(CURDIR)/debian/tmp-dbg; \
+	  echo "================ $$v ==================="; \
+	  $(MAKE) -C build-$$v install DESTDIR=$(CURDIR)/debian/tmp; \
+	done
+	find . -name "*.pyc" -exec rm {} \;
+	find debian/tmp* -name '_omni*.so*'
+	for i in $$(find debian/tmp-dbg -name '_omni*d-*.so*'); do \
+	  echo "Renaming $$i ..."; \
+	  dst=$$(echo $$i | sed 's,tmp-dbg,tmp,;'); \
+	  mv $$i $$dst; \
+	done
+	find debian/tmp -name '_omni*.so*'
+	dh_install --sourcedir=debian/tmp
+	dh_missing --list-missing
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir -i
+	dh_testroot -i
+	dh_installdocs -i
+	dh_installexamples -i
+	dh_installchangelogs update.log -i
+	dh_python3 -i
+	dh_link -i
+	dh_compress -i -X.pdf
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir -a
+	dh_testroot -a
+	dh_installdocs -a
+	dh_installchangelogs update.log -a
+	#dh_python2 -a
+	#mv debian/python3-omniorb/usr/local/lib/python$(PYVERS)/dist-packages debian/python3-omniorb/usr/local/lib/python$(PYVERS)/dist-packages
+	#mv debian/python3-omniorb/usr/local/lib/python$(PYVERS) debian/python3-omniorb/usr/local/lib/python3
+	dh_strip -ppython3-omniorb --dbg-package=python3-omniorb-dbg
+	dh_link -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_installdeb -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure
