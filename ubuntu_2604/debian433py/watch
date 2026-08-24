@@ -1,0 +1,5 @@
+# Watch file for python-omniorb, see uscan(1) for details.
+
+version=3
+
+http://sf.net/omniorb/omniORBpy-(.+)\.tar\.gz

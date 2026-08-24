@@ -1,0 +1,110 @@
+Description: Enable building for debug builds of python
+ This allows one to build the modules for pydebug builds in the same
+ tree as the normal build by following normal distutils filename
+ convetions for pydebug extension modules (adding _d to the name).
+Forwarded: http://www.omniorb-support.com/pipermail/omniorb-list/2010-January/030475.html
+Author: Floris Bruynooghe <flub@devork.be>
+Last-Update: 2010-08-09
+
+Index: b/examples/embed/dir.mk
+===================================================================
+--- a/examples/embed/dir.mk
++++ b/examples/embed/dir.mk
+@@ -14,10 +14,13 @@ CXXSRCS = embed.cc
+ 
+ ifdef UnixPlatform
+ CXXDEBUGFLAGS = -g
+-PYPREFIX  := $(shell $(PYTHON) -c 'import sys; print sys.exec_prefix')
+-PYVERSION := $(shell $(PYTHON) -c 'import sys; print sys.version[:3]')
++PYPREFIX  := $(shell $(PYTHON) -c 'import sys; print(sys.exec_prefix)')
++PYVERSION := $(shell $(PYTHON) -c 'import sys; print(sys.version[:3])')
++PYINCBASE := $(shell $(PYTHON) -c 'import distutils.sysconfig, os.path; print(os.path.basename(distutils.sysconfig.get_config_var("INCLUDEPY")))')
++PY_SHAREDLIB_SUFFIX := $(shell $(PYTHON) -c 'import distutils.sysconfig; print(distutils.sysconfig.get_config_var("SHLIB_EXT"))')
++
+ PYINCDIR  := $(PYPREFIX)/include
+-PYINCFILE := "<python$(PYVERSION)/Python.h>"
++PYINCFILE := "<$(PYINCBASE)/Python.h>"
+ DIR_CPPFLAGS += -I$(PYINCDIR) -DPYTHON_INCLUDE=$(PYINCFILE)
+ endif
+ 
+@@ -26,9 +29,9 @@ ifeq ($(platform),autoconf)
+ 
+ namespec := _embedmodule _ 1 0
+ 
+-SharedLibraryFullNameTemplate = $$1$$2.$(SHAREDLIB_SUFFIX).$$3.$$4
+-SharedLibrarySoNameTemplate   = $$1$$2.$(SHAREDLIB_SUFFIX).$$3
+-SharedLibraryLibNameTemplate  = $$1$$2.$(SHAREDLIB_SUFFIX)
++SharedLibraryFullNameTemplate = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3.$$4
++SharedLibrarySoNameTemplate   = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3
++SharedLibraryLibNameTemplate  = $$1$$2$(PY_SHAREDLIB_SUFFIX)
+ 
+ ifdef PythonLibraryPlatformLinkFlagsTemplate
+ SharedLibraryPlatformLinkFlagsTemplate = $(PythonLibraryPlatformLinkFlagsTemplate)
+Index: b/modules/codesets/dir.mk
+===================================================================
+--- a/modules/codesets/dir.mk
++++ b/modules/codesets/dir.mk
+@@ -39,9 +39,9 @@ ifdef PythonSHAREDLIB_SUFFIX
+ SHAREDLIB_SUFFIX = $(PythonSHAREDLIB_SUFFIX)
+ endif
+ 
+-SharedLibraryFullNameTemplate = $$1$$2.$(SHAREDLIB_SUFFIX).$$3.$$4
+-SharedLibrarySoNameTemplate   = $$1$$2.$(SHAREDLIB_SUFFIX).$$3
+-SharedLibraryLibNameTemplate  = $$1$$2.$(SHAREDLIB_SUFFIX)
++SharedLibraryFullNameTemplate = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3.$$4
++SharedLibrarySoNameTemplate   = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3
++SharedLibraryLibNameTemplate  = $$1$$2$(PY_SHAREDLIB_SUFFIX)
+ 
+ ifdef PythonLibraryPlatformLinkFlagsTemplate
+ SharedLibraryPlatformLinkFlagsTemplate = $(PythonLibraryPlatformLinkFlagsTemplate)
+Index: b/modules/connections/dir.mk
+===================================================================
+--- a/modules/connections/dir.mk
++++ b/modules/connections/dir.mk
+@@ -45,9 +45,9 @@ ifdef PythonSHAREDLIB_SUFFIX
+ SHAREDLIB_SUFFIX = $(PythonSHAREDLIB_SUFFIX)
+ endif
+ 
+-SharedLibraryFullNameTemplate = $$1$$2.$(SHAREDLIB_SUFFIX).$$3.$$4
+-SharedLibrarySoNameTemplate   = $$1$$2.$(SHAREDLIB_SUFFIX).$$3
+-SharedLibraryLibNameTemplate  = $$1$$2.$(SHAREDLIB_SUFFIX)
++SharedLibraryFullNameTemplate = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3.$$4
++SharedLibrarySoNameTemplate   = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3
++SharedLibraryLibNameTemplate  = $$1$$2$(PY_SHAREDLIB_SUFFIX)
+ 
+ ifdef PythonLibraryPlatformLinkFlagsTemplate
+ SharedLibraryPlatformLinkFlagsTemplate = $(PythonLibraryPlatformLinkFlagsTemplate)
+Index: b/modules/dir.mk
+===================================================================
+--- a/modules/dir.mk
++++ b/modules/dir.mk
+@@ -90,9 +90,9 @@ ifdef PythonSHAREDLIB_SUFFIX
+ SHAREDLIB_SUFFIX = $(PythonSHAREDLIB_SUFFIX)
+ endif
+ 
+-SharedLibraryFullNameTemplate = $$1$$2.$(SHAREDLIB_SUFFIX).$$3.$$4
+-SharedLibrarySoNameTemplate   = $$1$$2.$(SHAREDLIB_SUFFIX).$$3
+-SharedLibraryLibNameTemplate  = $$1$$2.$(SHAREDLIB_SUFFIX)
++SharedLibraryFullNameTemplate = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3.$$4
++SharedLibrarySoNameTemplate   = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3
++SharedLibraryLibNameTemplate  = $$1$$2$(PY_SHAREDLIB_SUFFIX)
+ 
+ ifdef PythonLibraryPlatformLinkFlagsTemplate
+ SharedLibraryPlatformLinkFlagsTemplate = $(PythonLibraryPlatformLinkFlagsTemplate)
+Index: b/modules/sslTP/dir.mk
+===================================================================
+--- a/modules/sslTP/dir.mk
++++ b/modules/sslTP/dir.mk
+@@ -40,9 +40,9 @@ ifdef PythonSHAREDLIB_SUFFIX
+ SHAREDLIB_SUFFIX = $(PythonSHAREDLIB_SUFFIX)
+ endif
+ 
+-SharedLibraryFullNameTemplate = $$1$$2.$(SHAREDLIB_SUFFIX).$$3.$$4
+-SharedLibrarySoNameTemplate   = $$1$$2.$(SHAREDLIB_SUFFIX).$$3
+-SharedLibraryLibNameTemplate  = $$1$$2.$(SHAREDLIB_SUFFIX)
++SharedLibraryFullNameTemplate = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3.$$4
++SharedLibrarySoNameTemplate   = $$1$$2$(PY_SHAREDLIB_SUFFIX).$$3
++SharedLibraryLibNameTemplate  = $$1$$2$(PY_SHAREDLIB_SUFFIX)
+ 
+ ifdef PythonLibraryPlatformLinkFlagsTemplate
+ SharedLibraryPlatformLinkFlagsTemplate = $(PythonLibraryPlatformLinkFlagsTemplate)
